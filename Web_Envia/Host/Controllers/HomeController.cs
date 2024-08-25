@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
-using Web_Envia.Models;
+using Web_Envia.Domain.Models;
 
-namespace Web_Envia.Controllers
+namespace Web_Envia.Host.Controllers
 {
     public class HomeController : Controller
     {

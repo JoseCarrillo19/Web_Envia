@@ -1,21 +1,13 @@
-using Microsoft.EntityFrameworkCore;
-using Web_Envia.Infrastructure.Data;
-using Web_Envia.Infrastructure.Repository;
-using Web_Envia.Infrastructure.Repository.IRepository;
-using Web_Envia.Services;
-using Web_Envia.Services.IServices;
+using Web_Envia.Application.IoC;
+using Web_Envia.Infrastructure.IoC;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
-                               options.UseSqlServer(
-                                  builder.Configuration.GetConnectionString("DefaultConnection")));
-
-builder.Services.AddScoped<IGuidesRegistrationRepository, GuidesRegistrationRepository>();
-builder.Services.AddScoped<IGuidesRegistrationServices, GuidesRegistrationServices>();
+builder.Services.AddServices();
+builder.Services.AddRepositories();
 
 var app = builder.Build();
 

@@ -1,7 +1,8 @@
-﻿using Web_Envia.Infrastructure.Data;
-using Web_Envia.Infrastructure.Repository.IRepository;
-using Web_Envia.Models;
-using Web_Envia.Models.Enum;
+﻿using Microsoft.EntityFrameworkCore;
+using Web_Envia.Domain.IRepository;
+using Web_Envia.Domain.Models;
+using Web_Envia.Domain.Models.Enum;
+using Web_Envia.Infrastructure.Data;
 
 namespace Web_Envia.Infrastructure.Repository
 {
@@ -22,7 +23,9 @@ namespace Web_Envia.Infrastructure.Repository
 
         public Guides GetById(int id)
         {
-            return _context.Guias.Find(id);
+            return _context.Guias
+                    .Include(g => g.Remitente) 
+                    .FirstOrDefault(g => g.Id == id);
         }
 
         public IEnumerable<Guides> GetByEstadoAndDestinatario(Estados estado, string destinatario)
@@ -46,6 +49,10 @@ namespace Web_Envia.Infrastructure.Repository
         public Guides GetByNumeroGuia(string numeroGuia)
         {
             return _context.Guias.FirstOrDefault(g => g.NumeroGuia == numeroGuia);
+        }
+        public bool ExisteNumeroGuia(string numeroGuia)
+        {
+            return _context.Guias.Any(g => g.NumeroGuia == numeroGuia);
         }
     }
 }

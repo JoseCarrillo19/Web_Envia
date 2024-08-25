@@ -1,64 +1,127 @@
-﻿@model Web_Envia.Models.Guides
+﻿@using Web_Envia.Domain.Models.Enum
+@model Web_Envia.Domain.Models.Guides
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Crear Nueva Guía";
 }
 
 <div class="container mt-5">
     <h2 class="mb-4">@ViewData["Title"]</h2>
 
+    <!-- Resumen de Validación -->
+    <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+
     <form id="guideForm" asp-action="Create">
-        <div class="form-group">
-            <label asp-for="NumeroGuia" class="control-label">Número de Guía</label>
-            <input asp-for="NumeroGuia" class="form-control" placeholder="Número de Guía" />
-            <span asp-validation-for="NumeroGuia" class="text-danger"></span>
+        <div class="row">
+            <!-- Datos del Remitente -->
+            <div class="col-md-6">
+                <div class="card mb-4">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="mb-0">Datos del Remitente</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group mb-3">
+                            <label asp-for="Remitente.Nombre" class="control-label">Nombre del Remitente</label>
+                            <input asp-for="Remitente.Nombre" class="form-control" placeholder="Nombre del Remitente" />
+                            <span asp-validation-for="Remitente.Nombre" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label asp-for="Remitente.Direccion" class="control-label">Dirección del Remitente</label>
+                            <input asp-for="Remitente.Direccion" class="form-control" placeholder="Dirección del Remitente" />
+                            <span asp-validation-for="Remitente.Direccion" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label asp-for="Remitente.Telefono" class="control-label">Teléfono del Remitente</label>
+                            <input asp-for="Remitente.Telefono" class="form-control" placeholder="Teléfono del Remitente" />
+                            <span asp-validation-for="Remitente.Telefono" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Datos del Destinatario -->
+            <div class="col-md-6">
+                <div class="card mb-4">
+                    <div class="card-header bg-secondary text-white">
+                        <h5 class="mb-0">Datos del Destinatario</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group mb-3">
+                            <label asp-for="Destinatario" class="control-label">Nombre del Destinatario</label>
+                            <input asp-for="Destinatario" class="form-control" placeholder="Nombre del Destinatario" />
+                            <span asp-validation-for="Destinatario" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label asp-for="Direccion" class="control-label">Dirección del Destinatario</label>
+                            <input asp-for="Direccion" class="form-control" placeholder="Dirección del Destinatario" />
+                            <span asp-validation-for="Direccion" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label asp-for="Telefono" class="control-label">Teléfono del Destinatario</label>
+                            <input asp-for="Telefono" class="form-control" placeholder="Teléfono del Destinatario" />
+                            <span asp-validation-for="Telefono" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
 
-        <div class="form-group">
-            <label asp-for="Destinatario" class="control-label">Destinatario</label>
-            <input asp-for="Destinatario" class="form-control" placeholder="Destinatario" />
-            <span asp-validation-for="Destinatario" class="text-danger"></span>
+        <!-- Datos del Servicio -->
+        <div class="card mb-4">
+            <div class="card-header bg-info text-white">
+                <h5 class="mb-0">Datos del Servicio</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group mb-3">
+                            <label asp-for="TipoServicio" class="control-label">Tipo de Servicio</label>
+                            <select asp-for="TipoServicio" class="form-control">
+                                <option value="">Seleccione el tipo de servicio</option>
+                                <option value="@((int)TipoServicio.Sobre)">Sobre</option>
+                                <option value="@((int)TipoServicio.Caja)">Caja</option>
+                                <option value="@((int)TipoServicio.Paquete)">Paquete</option>
+                            </select>
+                            <span asp-validation-for="TipoServicio" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="form-group mb-3">
+                            <label asp-for="Peso" class="control-label">Peso en Kg</label>
+                            <input asp-for="Peso" class="form-control" placeholder="Peso en Kg" />
+                            <span asp-validation-for="Peso" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="form-group mb-3">
+                            <label asp-for="Cantidad" class="control-label">Cantidad</label>
+                            <input asp-for="Cantidad" class="form-control" placeholder="Cantidad" />
+                            <span asp-validation-for="Cantidad" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-check mb-3">
+                    <input asp-for="EsInternacional" class="form-check-input" type="checkbox" id="internationalCheck" />
+                    <label class="form-check-label" for="internationalCheck">
+                        Es Internacional
+                    </label>
+                </div>
+            </div>
         </div>
 
-        <div class="form-group">
-            <label asp-for="Direccion" class="control-label">Dirección</label>
-            <input asp-for="Direccion" class="form-control" placeholder="Dirección" />
-            <span asp-validation-for="Direccion" class="text-danger"></span>
+        <!-- Botón de Confirmación -->
+        <div class="text-center">
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#confirmModal">
+                Registrar Guía
+            </button>
         </div>
-
-        <div class="form-group">
-            <label asp-for="TipoServicio" class="control-label">Tipo de Servicio</label>
-            <select asp-for="TipoServicio" class="form-control">
-                <option value="">Seleccione el tipo de servicio</option>
-                <option value="@((int)Web_Envia.Models.Enum.TipoServicio.Sobre)">Sobre</option>
-                <option value="@((int)Web_Envia.Models.Enum.TipoServicio.Caja)">Caja</option>
-                <option value="@((int)Web_Envia.Models.Enum.TipoServicio.Paquete)">Paquete</option>
-            </select>
-            <span asp-validation-for="TipoServicio" class="text-danger"></span>
-        </div>
-
-        <div class="form-group">
-            <label asp-for="Peso" class="control-label">Peso en Kg</label>
-            <input asp-for="Peso" class="form-control" placeholder="Peso en Kg" />
-            <span asp-validation-for="Peso" class="text-danger"></span>
-        </div>
-
-        <div class="form-group">
-            <label asp-for="Cantidad" class="control-label">Cantidad</label>
-            <input asp-for="Cantidad" class="form-control" placeholder="Cantidad" />
-            <span asp-validation-for="Cantidad" class="text-danger"></span>
-        </div>
-
-        <div class="form-check">
-            <input asp-for="EsInternacional" class="form-check-input" type="checkbox" id="internationalCheck" />
-            <label class="form-check-label" for="internationalCheck">
-                Es Internacional
-            </label>
-        </div>
-
-        <button type="button" class="btn btn-primary mt-4" data-bs-toggle="modal" data-bs-target="#confirmModal">
-            Registrar Guía
-        </button>
     </form>
 </div>
 

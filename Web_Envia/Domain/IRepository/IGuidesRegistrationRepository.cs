@@ -1,7 +1,7 @@
-﻿using Web_Envia.Models;
-using Web_Envia.Models.Enum;
+﻿using Web_Envia.Domain.Models;
+using Web_Envia.Domain.Models.Enum;
 
-namespace Web_Envia.Infrastructure.Repository.IRepository
+namespace Web_Envia.Domain.IRepository
 {
     public interface IGuidesRegistrationRepository
     {
@@ -11,5 +11,6 @@ namespace Web_Envia.Infrastructure.Repository.IRepository
         void Update(Guides guia);
         IEnumerable<Guides> GetAll();
         Guides GetByNumeroGuia(string numeroGuia);
+        bool ExisteNumeroGuia(string numeroGuia);
     }
 }

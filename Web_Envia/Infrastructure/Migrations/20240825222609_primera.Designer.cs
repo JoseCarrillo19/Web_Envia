@@ -12,7 +12,7 @@ using Web_Envia.Infrastructure.Data;
 namespace Web_Envia.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240825200354_primera")]
+    [Migration("20240825222609_primera")]
     partial class primera
     {
         /// <inheritdoc />
@@ -63,7 +63,13 @@ namespace Web_Envia.Migrations
                     b.Property<double>("Peso")
                         .HasColumnType("float");
 
+                    b.Property<int>("RemitenteId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Status")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Telefono")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("TipoServicio")
@@ -74,7 +80,47 @@ namespace Web_Envia.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("RemitenteId");
+
                     b.ToTable("Guias");
+                });
+
+            modelBuilder.Entity("Web_Envia.Models.Remitente", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Direccion")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Nombre")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Telefono")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Remitentes");
+                });
+
+            modelBuilder.Entity("Web_Envia.Models.Guides", b =>
+                {
+                    b.HasOne("Web_Envia.Models.Remitente", "Remitente")
+                        .WithMany("Guias")
+                        .HasForeignKey("RemitenteId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Remitente");
+                });
+
+            modelBuilder.Entity("Web_Envia.Models.Remitente", b =>
+                {
+                    b.Navigation("Guias");
                 });
 #pragma warning restore 612, 618
         }

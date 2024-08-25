@@ -1,4 +1,4 @@
-﻿namespace Web_Envia.Models.Enum
+﻿namespace Web_Envia.Domain.Models.Enum
 {
     public enum Estados
     {

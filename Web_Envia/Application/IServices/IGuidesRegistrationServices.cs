@@ -1,7 +1,7 @@
-﻿using Web_Envia.Models;
-using Web_Envia.Models.Enum;
+﻿using Web_Envia.Domain.Models;
+using Web_Envia.Domain.Models.Enum;
 
-namespace Web_Envia.Services.IServices
+namespace Web_Envia.Application.IServices
 {
     public interface IGuidesRegistrationServices
     {

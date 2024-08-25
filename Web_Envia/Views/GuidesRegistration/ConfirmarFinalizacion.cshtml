@@ -1,4 +1,4 @@
-﻿@model Web_Envia.Models.Guides
+﻿@model Guides
 
 @{
     ViewData["Title"] = "ConfirmarFinalizacion";
@@ -15,6 +15,8 @@
 
     <p><strong>Número de Guía:</strong> @Model.NumeroGuia</p>
     <p><strong>Destinatario:</strong> @Model.Destinatario</p>
+    <p><strong>Tipo Servicio:</strong> @Model.TipoServicio</p>
+    <p><strong>Direccion:</strong> @Model.Direccion</p>
     <p><strong>Estado Actual:</strong> @Model.EstadoGuides</p>
 
     <form asp-action="ConfirmarFinalizacion" method="post">

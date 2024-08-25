@@ -1,18 +1,29 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.ComponentModel.DataAnnotations;
-using Web_Envia.Models.Enum;
+using Web_Envia.Domain.Models.Enum;
 
-namespace Web_Envia.Models
+namespace Web_Envia.Domain.Models
 {
     public class Guides : AuditableEntity
     {
         [Key]
         public int Id { get; set; }
         public string? NumeroGuia { get; set; }
+
+        public int RemitenteId { get; set; }
+        public Remitente? Remitente { get; set; }
+
+        [Required(ErrorMessage = "Es un campo obligatorio")]
         public string? Destinatario { get; set; }
+        [Required(ErrorMessage = "Es un campo obligatorio")]
         public string? Direccion { get; set; }
+        [Required(ErrorMessage = "Es un campo obligatorio")]
+        public string? Telefono { get; set; }
+        [Required(ErrorMessage = "Es un campo obligatorio")]
         public TipoServicio TipoServicio { get; set; }
+        [Required(ErrorMessage = "Es un campo obligatorio")]
         public double Peso { get; set; }
+        [Required(ErrorMessage = "Es un campo obligatorio")]
         public double Cantidad { get; set; }
         public bool EsInternacional { get; set; }
         public Estados EstadoGuides { get; set; }

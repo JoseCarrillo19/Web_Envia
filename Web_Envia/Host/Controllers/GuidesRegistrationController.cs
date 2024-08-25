@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Web_Envia.Models;
-using Web_Envia.Models.Enum;
-using Web_Envia.Services.IServices;
+using Web_Envia.Application.IServices;
+using Web_Envia.Domain.Models;
+using Web_Envia.Domain.Models.Enum;
 
-namespace Web_Envia.Controllers
+namespace Web_Envia.Host.Controllers
 {
     public class GuidesRegistrationController : Controller
     {
@@ -26,9 +26,16 @@ namespace Web_Envia.Controllers
             if (ModelState.IsValid)
             {
                 _guiaService.RegistrarGuia(guia);
-                return RedirectToAction(nameof(Search));
+                return RedirectToAction(nameof(CreateResult), new { numeroGuia = guia.NumeroGuia });
             }
             return View(guia);
+        }
+
+        [HttpGet]
+        public IActionResult CreateResult(string numeroGuia)
+        {
+            ViewBag.NumeroGuia = numeroGuia;
+            return View();
         }
 
         public IActionResult Search(Estados estado, string destinatario)
@@ -73,6 +80,17 @@ namespace Web_Envia.Controllers
                 return View("FinalizarResultado", guia);
             }
             return NotFound();
+        }
+
+        public IActionResult Detalle(int id)
+        {
+            var guia = _guiaService.ObtenerGuiaPorId(id);
+            if (guia == null)
+            {
+                return NotFound();
+            }
+
+            return View(guia);
         }
     }
 }

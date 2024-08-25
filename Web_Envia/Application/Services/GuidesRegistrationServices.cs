@@ -1,11 +1,10 @@
 ﻿using NuGet.Protocol.Core.Types;
-using System;
-using Web_Envia.Infrastructure.Repository.IRepository;
-using Web_Envia.Models;
-using Web_Envia.Models.Enum;
-using Web_Envia.Services.IServices;
+using Web_Envia.Application.IServices;
+using Web_Envia.Domain.IRepository;
+using Web_Envia.Domain.Models;
+using Web_Envia.Domain.Models.Enum;
 
-namespace Web_Envia.Services
+namespace Web_Envia.Application.Services
 {
     public class GuidesRegistrationServices : IGuidesRegistrationServices
     {
@@ -24,6 +23,7 @@ namespace Web_Envia.Services
             guia.CreationDate = DateTime.Now;
             guia.ValorServicio = guia.CalcularValor();
             guia.EstadoGuides = Estados.DESPACHO;
+            guia.NumeroGuia = GenerarNumeroGuiaUnico();
             _guiaRepository.Add(guia);
         }
 
@@ -68,7 +68,27 @@ namespace Web_Envia.Services
 
         public Guides ObtenerGuiaPorId(int id)
         {
-            return _guiaRepository.GetById(id);
+            var request = _guiaRepository.GetById(id);
+            return request;
         }
+
+        public string GenerarNumeroGuiaUnico()
+        {
+            string numeroGuia;
+            do
+            {
+                numeroGuia = GenerarNumeroGuiaAleatorio();
+            } while (_guiaRepository.ExisteNumeroGuia(numeroGuia));
+
+            return numeroGuia;
+        }
+
+        private string GenerarNumeroGuiaAleatorio()
+        {
+            var random = new Random();
+            var numeroGuia = string.Concat(Enumerable.Range(0, 12).Select(_ => random.Next(0, 10).ToString()));
+            return numeroGuia;
+        }
+
     }
 }

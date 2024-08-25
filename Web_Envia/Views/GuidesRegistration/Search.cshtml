@@ -1,7 +1,8 @@
-﻿@model IEnumerable<Web_Envia.Models.Guides>
+﻿@using Web_Envia.Domain.Models.Enum
+@model IEnumerable<Guides>
 
 @{
-    ViewData["Title"] = "Search";
+    ViewData["Title"] = "Consultas";
 }
 
 <div class="container mt-5">
@@ -15,7 +16,7 @@
         <div class="col-md-4">
             <select name="estado" class="form-select">
                 <option value="">Seleccione un Estado</option>
-                @foreach (var estado in Enum.GetValues(typeof(Web_Envia.Models.Enum.Estados)))
+                @foreach (var estado in Enum.GetValues(typeof(Estados)))
                 {
                     if (ViewData["estado"]?.ToString() == estado.ToString())
                     {
@@ -41,7 +42,11 @@
             <tr>
                 <th>Número de Guía</th>
                 <th>Destinatario</th>
+                <th>Dirección</th>
+                <th>Valor Servicio</th>
+                <th>Tipo Servicio</th>
                 <th>Estado</th>
+                <th>Acciones</th>
             </tr>
         </thead>
         <tbody>
@@ -52,14 +57,20 @@
                     <tr>
                         <td>@guia.NumeroGuia</td>
                         <td>@guia.Destinatario</td>
+                        <td>@guia.Direccion</td>
+                        <td>@guia.ValorServicio</td>
+                        <td>@guia.TipoServicio</td>
                         <td>@guia.EstadoGuides</td>
+                        <td>
+                            <a class="btn btn-info" asp-action="Detalle" asp-route-id="@guia.Id">Detalle</a>
+                        </td>
                     </tr>
                 }
             }
             else
             {
                 <tr>
-                    <td colspan="3" class="text-center">No se encontraron guías.</td>
+                    <td colspan="7" class="text-center">No se encontraron guías.</td>
                 </tr>
             }
         </tbody>

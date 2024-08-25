@@ -1,4 +1,4 @@
-namespace Web_Envia.Models
+namespace Web_Envia.Domain.Models
 {
     public class ErrorViewModel
     {

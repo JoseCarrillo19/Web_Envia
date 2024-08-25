@@ -1,0 +1,12 @@
+﻿@{
+    ViewData["Title"] = "Guía Registrada";
+}
+
+<div class="container mt-5">
+    <div class="alert alert-success">
+        <h4 class="alert-heading">¡Guía registrada con éxito!</h4>
+        <p>El número de guía asignado es: <strong>@ViewBag.NumeroGuia</strong></p>
+        <hr>
+        <a href="@Url.Action("Create", "GuidesRegistration")" class="btn btn-primary">Registrar otra Guía</a>
+    </div>
+</div>

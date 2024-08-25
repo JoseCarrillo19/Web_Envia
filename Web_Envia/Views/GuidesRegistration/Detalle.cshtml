@@ -1,0 +1,96 @@
+﻿@using Web_Envia.Domain.Models.Enum
+@model Web_Envia.Domain.Models.Guides
+
+@{
+    ViewData["Title"] = "Detalle de la Guía";
+}
+
+<div class="container mt-5">
+    <h2 class="mb-4 text-center">Detalle de la Guía</h2>
+
+    <div class="card mb-4">
+        <div class="card-body">
+            <!-- Número de Guía y Fecha -->
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <h5 class="card-title">Guía # <span class="text-danger">@Model.NumeroGuia</span></h5>
+                </div>
+                <div class="col-md-6 text-end">
+                    <p class="card-text">Fecha de creación: <strong>@Model.CreationDate.ToString("dd/MM/yyyy HH:mm")</strong></p>
+                </div>
+            </div>
+
+            <!-- Datos del Remitente y Destinatario -->
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <h6 class="text-primary">Datos del Remitente</h6>
+                    <p class="card-text"><strong>Nombre:</strong> @Model.Remitente?.Nombre</p>
+                    <p class="card-text"><strong>Dirección:</strong> @Model.Remitente?.Direccion</p>
+                    <p class="card-text"><strong>Teléfono:</strong> @Model.Remitente?.Telefono</p>
+                </div>
+                <div class="col-md-6 text-end">
+                    <h6 class="text-secondary">Datos del Destinatario</h6>
+                    <p class="card-text"><strong>Nombre:</strong> @Model.Destinatario</p>
+                    <p class="card-text"><strong>Dirección:</strong> @Model.Direccion</p>
+                    <p class="card-text"><strong>Teléfono:</strong> @Model.Telefono</p>
+                </div>
+            </div>
+
+            <!-- Estado Actual -->
+            <div class="text-center mb-4">
+                <h5 class="text-danger">Estado: @Model.EstadoGuides.ToString().ToUpper()</h5>
+            </div>
+
+            <!-- Línea de tiempo del envío (solo con los estados disponibles) -->
+            <div class="progress mb-4" style="height: 30px;">
+                <div class="progress-bar bg-danger" role="progressbar" style="width: @GetProgressPercentage(Model.EstadoGuides)%" aria-valuenow="@GetProgressPercentage(Model.EstadoGuides)" aria-valuemin="0" aria-valuemax="100">
+                    @GetProgressText(Model.EstadoGuides)
+                </div>
+            </div>
+
+            <!-- Información Adicional -->
+            <div class="card mt-4">
+                <div class="card-body">
+                    <h6 class="text-info">Información Adicional</h6>
+                    <p class="card-text"><strong>Tipo de Servicio:</strong> @Model.TipoServicio.ToString()</p>
+                    <p class="card-text"><strong>Peso:</strong> @Model.Peso Kg</p>
+                    <p class="card-text"><strong>Cantidad:</strong> @Model.Cantidad</p>
+                    <p class="card-text"><strong>Es Internacional:</strong> @(Model.EsInternacional ? "Sí" : "No")</p>
+                    <p class="card-text"><strong>Valor del Servicio:</strong> @String.Format("{0:C}", @Model.ValorServicio)</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <a href="@Url.Action("Search", "GuidesRegistration")" class="btn btn-secondary mt-4">Volver a Consultas</a>
+</div>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Agregar iconos de Bootstrap -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+}
+
+@functions {
+    // Método para obtener el porcentaje de progreso en función del estado actual
+    private int GetProgressPercentage(Estados estado)
+    {
+        return estado switch
+        {
+            Estados.DESPACHO => 50,
+            Estados.FINALIZADA => 100,
+            _ => 0,
+        };
+    }
+
+    // Método para obtener el texto del estado en la barra de progreso
+    private string GetProgressText(Estados estado)
+    {
+        return estado switch
+        {
+            Estados.DESPACHO => "En Despacho",
+            Estados.FINALIZADA => "Finalizada",
+            _ => "Estado Desconocido",
+        };
+    }
+}
