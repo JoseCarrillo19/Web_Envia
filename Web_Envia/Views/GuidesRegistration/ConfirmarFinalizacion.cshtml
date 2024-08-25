@@ -1,0 +1,29 @@
+﻿@model Web_Envia.Models.Guides
+
+@{
+    ViewData["Title"] = "ConfirmarFinalizacion";
+}
+
+<h1>ConfirmarFinalizacion</h1>
+
+@{
+    ViewData["Title"] = "Confirmar Finalización";
+}
+
+<div class="container mt-5">
+    <h2 class="mb-4">Confirmar Finalización de la Guía</h2>
+
+    <p><strong>Número de Guía:</strong> @Model.NumeroGuia</p>
+    <p><strong>Destinatario:</strong> @Model.Destinatario</p>
+    <p><strong>Estado Actual:</strong> @Model.EstadoGuides</p>
+
+    <form asp-action="ConfirmarFinalizacion" method="post">
+        <input type="hidden" name="id" value="@Model.Id" />
+        <button type="submit" class="btn btn-danger mt-3">Finalizar Guía</button>
+        <a href="@Url.Action("Finalizar")" class="btn btn-secondary mt-3">Cancelar</a>
+    </form>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

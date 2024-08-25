@@ -1,0 +1,22 @@
+﻿@model Web_Envia.Models.Guides
+
+<h1>FinalizarResultado</h1>
+
+@{
+    ViewData["Title"] = "Guía Finalizada";
+}
+
+<div class="container mt-5">
+    <div class="card shadow-sm">
+        <div class="card-header bg-success text-white">
+            <h2 class="mb-0">Guía Finalizada Exitosamente</h2>
+        </div>
+        <div class="card-body">
+            <p class="card-text"><strong>Número de Guía:</strong> @Model.NumeroGuia</p>
+            <p class="card-text"><strong>Destinatario:</strong> @Model.Destinatario</p>
+            <p class="card-text"><strong>Estado Final:</strong> @Model.EstadoGuides</p>
+            <p class="card-text"><strong>Valor del Servicio:</strong> @String.Format("{0:C}", ViewBag.ValorServicio)</p>
+            <a href="@Url.Action("Search", "GuidesRegistration")" class="btn btn-primary mt-3">Volver a la Búsqueda</a>
+        </div>
+    </div>
+</div>

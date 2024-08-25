@@ -1,0 +1,24 @@
+﻿@model Web_Envia.Models.Guides
+
+@{
+    ViewData["Title"] = "Finalizar Guía";
+}
+
+<div class="container mt-5">
+    <h2 class="mb-4">Buscar Guía para Finalizar</h2>
+
+    <form asp-action="Finalizar" method="post">
+        <div class="form-group">
+            <label for="numeroGuia">Número de Guía</label>
+            <input type="text" name="numeroGuia" class="form-control" placeholder="Ingrese el número de guía" value="@Model" />
+            <span asp-validation-summary="ModelOnly" class="text-danger"></span>
+        </div>
+        <button type="submit" class="btn btn-primary mt-3">Buscar</button>
+    </form>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
